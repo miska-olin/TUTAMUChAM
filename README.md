@@ -1,6 +1,8 @@
-# L-TUTAM
-Lagrangian Tampere University of Technology Aerosol Model
+# TAMUChAM
+Texas A&M University Chamber Aerosol Model
 
-Aerosol model using either modal or sectional method to represent particle size distribution in Matlab.
+Aerosol dynamics model for chamber experiments used in Matlab.
+
+Initially forked from Lagrangian Tampere University of Technology Aerosol Model (L-TUTAM, https://github.com/TUT-Aerosol/L-TUTAM)
 
 Read Manual.pdf
