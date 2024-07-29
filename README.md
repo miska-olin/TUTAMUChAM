@@ -1,5 +1,5 @@
-# TAMUChAM
-Texas A&M University Chamber Aerosol Model
+# TUTAMUChAM
+TUTAMU Chamber Aerosol Model
 
 Aerosol dynamics model for chamber experiments used in Matlab.
 
