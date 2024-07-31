@@ -1,11 +1,11 @@
-% Initializes the L-TUTAM
-% Lagrangian Tampere University of Technology Aerosol Model
-% Miska Olin 4.5.2016
+% Initializes the TUTAMUChAM
+% TUTAMU Chamber Aerosol Model
+% Miska Olin, July 2024
 
-disp('L-TUTAM starting...')
+disp('TUTAMUChAM starting...')
 if ~exist('p','var')
     disp('Loading interpolation tables for the PL distribution ...')
-    load taulukot
+    load interpolationTables
 end
 
 % Load the default setup

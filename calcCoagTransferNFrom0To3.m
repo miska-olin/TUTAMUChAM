@@ -18,7 +18,7 @@ function out = calcCoagTransferNFrom0To3(bins,alpha,d1,d2,rho,T,visc)
         
         mp1=pi/6*rho*dp1^3;
         
-        dp_alku_b = alaraja(d2^3-dp1^3,d1^3)^(1/3);
+        dp_alku_b = max(d2^3-dp1^3,d1^3)^(1/3);
         dbVec=logspace(lg(dp_alku_b),lg(d2),bins);
         njb=n_j_powerlaw(1,alpha,d1,d2,dbVec);
         njb([1 end])=njb([1 end])/2;

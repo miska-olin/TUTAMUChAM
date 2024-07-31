@@ -23,7 +23,7 @@ function [cmd,ln2s]=laskeCmdLn2s(N,S,M)
             ln2s(i) = 2/3*log(M(i)) + 1/3*log(N(i)) - log(S(i));
             ln2s(i) = rajat(log(1.01)^2,ln2s(i),log(2)^2);
 
-            cmd(i) = alaraja((M(i)/N(i))^(1/3)*exp(-1.5*ln2s(i)),1.1e-9);
+            cmd(i) = max((M(i)/N(i))^(1/3)*exp(-1.5*ln2s(i)),1.1e-9);
         end
         
         if isnan(cmd(i))

@@ -1,8 +1,9 @@
-p.condensationalTransfer = 1;
-p.T = 280;
+p.model = 'FS300';
+p.JMatrix = [inf;0];
+p.dCluster = 5e-9;
+p.highestDiameter = 5000e-9;
+p.GRMatrix = [inf;0];
+
+p.condensationalTransfer = 0;
+p.T = 300;
 p.rho = 1400;
-p.JMatrix = [0:100:3600; 0:0.01:.36];
-p.model = 'FS40';
-p.initialMomentVec = zeros(1,n_sec(p.model));
-p.losses=0;
-p.coagSink=0;
