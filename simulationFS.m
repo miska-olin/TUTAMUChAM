@@ -21,23 +21,26 @@ function out =  simulationFS(p)
 
     % Total simulation time
     p.totalTime = p.timeVec(end)-p.timeVec(1);
-    
-    % If 'p.initialMomentVec' is scalar 0, make a vector
-    if length(p.initialMomentVec)==1
-        if p.initialMomentVec==0
-            p.initialMomentVec = zeros(1,nSec);
-        end
+
+    % The method how initial particle size distribution is given
+    switch(p.initialPSDMethod)
+        case 'LN parameters'
+            initialN = n_j(Dp_centers,p.initialPSDParameters(1),p.initialPSDParameters(2),p.initialPSDParameters(3))*ln(Dp_edges(2)/Dp_edges(1));
+        case 'vector'
+            initialN = p.initialMomentVec;
+        case 'moments'
+            initialN = p.initialMomentVec;
     end
 
     % Options to ODE solver
-    options = odeset('RelTol',p.relativeTolerance,'nonnegative',1:nSec,'stats','off');
+    options = odeset('RelTol',p.relativeTolerance,'nonnegative',1:nSec,'InitialStep',1,'MaxStep',1000,'stats','off');
     
     if p.plotWaitbarDuringSim
         hWait = waitbar(0,'Simulating...');
     end
     
     % Solving ODE
-    [t,Y] = feval(p.solverName,@modelFunc,p.timeVec,p.initialMomentVec,options,p);
+    [t,Y] = feval(p.solverName,@modelFunc,p.timeVec,initialN,options,p);
 
     if p.plotWaitbarDuringSim
         close(hWait);
@@ -93,14 +96,14 @@ function dy = modelFunc(t,y,param)
         figure(1)
         clf
 
-
         stairs(param.Dp_centers*1e9,y/(log10(param.Dp_centers(3))-log10(param.Dp_centers(2))),'r')
         set(gca,'xscale','log','yscale','log')
-        ylim([max(param.JMatrix(2,:))/100 max(param.JMatrix(2,:))*10]*param.totalTime)
-        xlim([1 100])
+        ylim([100 1e6])
+        xlim([1 10000])
         title(strcat('t= ',num2str(t,'%1.3f'),' s'))
         xlabel('Dp (nm)')
         ylabel('dN/dlogDp (cm^{-3})')
+        grid
 
         drawnow
     end
@@ -117,7 +120,7 @@ function dy = modelFunc(t,y,param)
         % condensation
         C = param.GR/param.DeltaDp(i);
 
-        if i>1,
+        if i>1
             dy(i) = dy(i) - y(i).*C + y(i-1).*C;
         else
             dy(i) = dy(i) - y(i).*C;

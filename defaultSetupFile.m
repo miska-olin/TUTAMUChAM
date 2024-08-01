@@ -4,9 +4,8 @@
 % PL:    power law
 % LN:    log-normal
 % PLLN:  combined power law and log-normal
-% FSn:   fixed-sectional, where n is the number of sections (not yet in
-%           this version)
-p.model = 'LN';
+% FSn:   fixed-sectional, where n is the number of sections 
+p.model = 'FS40';
 
 % Method for solving a system of equations in PL and PLLN models
 % 1: interpolation table
@@ -72,7 +71,7 @@ p.sizeDependentGR = 0;
 %     p.condBins = 200;
 
 % Is coagulation to background mode modelled?
-p.coagSink = 1;
+p.coagSink = 0;
 
 % If it is...
     % CMD of background distribution (m)
@@ -92,6 +91,12 @@ p.losses = 1;
     
 % Time vector (s)
 p.timeVec = 0:3600;
+
+% Method for giving initial PSD 
+p.initialPSDMethod = 'LN parameters';
+
+% Initial PSD parameters if LN parameters are given
+p.initialPSDParameters = [1e5,2,100e-9];
 
 % Initial moment vector
 p.initialMomentVec = zeros(1,6);
