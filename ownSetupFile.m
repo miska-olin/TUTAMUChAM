@@ -1,12 +1,9 @@
-p.model = 'FS300';
-p.JMatrix = [inf;0];
+p.model = 'FS200';
 p.dCluster = 5e-9;
 p.highestDiameter = 5000e-9;
-p.GRMatrix = [inf;0];
 p.T = 295;
 p.visc = viscosity(p.T);
-p.coagSink = 0;
-p.timeVec = linspace(0,10*3600,200);
-p.initialPSDMethod = 'LN parameters';
-p.initialPSDParameters = [85913,1.7133,122.4e-9];
 p.solverName = 'ode23';
+p.relativeTolerance = 1e-2;
+p.GRModel = 1;
+p.particleNumberPenetration = 0.9;

@@ -1,8 +1,8 @@
 function [ la ] = vapaa_matka( temp )
 
     su = 110.4;
-	temp_r = 293.15;
-	l_r = 66.5e-9;
+	temp_r = 296.15;
+	l_r = 67.3e-9;
 	
 	eka = temp./temp_r;
 	tokayla = 1.0+su/temp_r;

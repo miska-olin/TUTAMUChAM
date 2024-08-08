@@ -5,20 +5,42 @@ if strcmp(out.p.model(1:2),'FS')
     hf.Position(3)=1082;
     hf.Position(4)=420;
     
-    subplot(1,3,1)
+    subplot(2,3,1)
     plot(out.t,out.N)
     xlabel('t (s)')
     ylabel('N (cm^{-3})')
 
-    subplot(1,3,2)
+    subplot(2,3,2)
     plot(out.t,out.M_2)
     xlabel('t (s)')
-    ylabel('M_2 (m^2 cm^{-3})')
+    ylabel('M_2 (nm^2 cm^{-3})')
 
-    subplot(1,3,3)
+    subplot(2,3,3)
     plot(out.t,out.M_3)
     xlabel('t (s)')
-    ylabel('M_3 (m^3 cm^{-3})')
+    ylabel('M_3 (ug m^{-3})')
+
+    subplot(2,3,4)
+    plot(out.t,out.GMD*1e9)
+    xlabel('t (s)')
+    ylabel('GMD (nm)')
+
+    subplot(2,3,5)
+    plot(out.t,out.GSD)
+    xlabel('t (s)')
+    ylabel('\sigma')
+
+    if out.p.GRModel == 1
+        hf3=figure(3);
+        hf3.Position=[300 160 1300 550];
+        
+        for iVapor = 1:out.p.nVapor
+            nexttile
+            plot(out.t,out.vaporConc(:,iVapor))
+            xlabel('t (s)')
+            ylabel({['Vapor ' int2str(iVapor) ': ' out.p.vaporName{iVapor}],'Conc. (ug/m3)'})
+        end
+    end
 
 else
     hf=figure(2);

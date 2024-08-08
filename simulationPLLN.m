@@ -17,12 +17,15 @@ function out =  simulationPLLN(p)
 
     % Total simulation time
     p.totalTime = p.timeVec(end)-p.timeVec(1);
-    
-    % If 'p.initialMomentVec' is scalar 0, make a vector
-    if length(p.initialMomentVec)==1
-        if p.initialMomentVec==0
-            p.initialMomentVec = zeros(1,6);
-        end
+
+    % The method how initial particle size distribution is given
+    switch(p.initialPSDMethod)
+        case 'parameters'
+            initialN = laskeMomentitErikseen(p.initialPSDParameters(1),p.initialPSDParameters(2),p.dCluster,p.initialPSDParameters(3),p.initialPSDParameters(4),p.initialPSDParameters(6),p.initialPSDParameters(5));
+        case 'moments'
+            initialN = p.initialMomentVec;
+        otherwise
+            error('Initial PSD method needs to be ''parameters'' or ''model'' for PLLN model')
     end
     
     % Calculating coagulation sink factor
@@ -36,7 +39,7 @@ function out =  simulationPLLN(p)
     end
     
     % Solving ODE
-    [t,Y] = feval(p.solverName,@modelFunc,p.timeVec,p.initialMomentVec,options,p);
+    [t,Y] = feval(p.solverName,@modelFunc,p.timeVec,initialN,options,p);
 
     if p.plotWaitbarDuringSim
         close(hWait);
@@ -372,12 +375,13 @@ function status=modelOutputFunc(t,y,flag,~)
             figure(1)
             clf
             plot_lognormal_parameters_powerlaw(y(1,end),alpha0,d1_0,d2_0,y(4,end),cmd,ln2s);
-            ylim([max(param.JMatrix(2,:))/100 max(param.JMatrix(2,:))*10]*param.timeVec(end)-param.timeVec(1))
-            xlim([1 100])
+            ylim([100 1e6])
+            xlim([1 10000])
             set(gca,'yscale','log')
             title(strcat('t= ',num2str(t(end),'%1.3f'),' s'))
             xlabel('Dp (nm)')
             ylabel('dN/dlogDp (cm^{-3})')
+            grid
 
             drawnow
 
