@@ -2,7 +2,7 @@
 % TUTAMU Chamber Aerosol Model
 % Miska Olin, August 2024
 
-disp('TUTAMUChAM 1.0 starting...')
+disp('TUTAMUChAM 1.1 starting...')
 if ~exist('p','var')
     disp('Loading interpolation tables for the PL distribution ...')
     load interpolationTables

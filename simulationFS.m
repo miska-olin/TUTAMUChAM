@@ -193,9 +193,9 @@ function dy = modelFunc(t,y,param)
         % condensation
         if param.GRModel == 1
             for iVapor = 1:param.nVapor
-                MGR(iVapor) = param.accommodationCoefficient(iVapor)*...
+                MGR(iVapor) = ...
                     massGrowthRate(dp,param.dMolec(iVapor),param.T,param.visc,param.diffMolec(iVapor),vaporConc(iVapor)*1e-9,...
-                    param.CSat(iVapor)*1e-9,param.rho,param.molarMass(iVapor),param.surfaceTension(iVapor)); % kg/s
+                    param.CSat(iVapor)*1e-9,param.rho,param.molarMass(iVapor),param.surfaceTension(iVapor),param.accommodationCoefficient(iVapor)); % kg/s
 
                 C(i) = C(i) + MGR(iVapor)/(pi/2*param.rho*dp^2)/param.DeltaDp(i);
 
